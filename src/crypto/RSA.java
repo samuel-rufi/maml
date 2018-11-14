@@ -13,8 +13,7 @@ import javax.crypto.Cipher;
 
 public class RSA {
 
-	private static final String ALGORITHM = "crypto.RSA/ECB/OAEPWithSHA-256AndMGF1Padding"; // =
-																						// crypto.RSA/NONE/OAEPWithSHA-256AndMGF1Padding
+	private static final String ALGORITHM = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"; // RSA/NONE/OAEPWithSHA-256AndMGF1Padding
 
 	public static String encrypt(PublicKey publicKey, String message) throws RSAException {
 		try {
