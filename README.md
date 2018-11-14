@@ -1,6 +1,6 @@
 # MAM Lite - an alternative messaging protocol for IOTA
 
-MAM Lite is a  lightweight, flexible and easy to use protocol which ensures privacy and integrity for data communication at another level.
+MAM Lite is a  lightweight, flexible and easy to use protocol which ensures privacy and integrity for data communication at another level. Detailed information can be found here: https://medium.com/@samuel.rufinatscha/mam-lite-an-alternative-messaging-protocol-for-iota-562fdd318e1d
 
 Features
 - Authentication
