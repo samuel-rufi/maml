@@ -2,7 +2,7 @@
 
 MAM Lite is a  lightweight, flexible and easy to use protocol which ensures privacy and integrity for data communication at another level.
 
-- Features
+Features
 - Authentication
 - Forward Secrecy
 - Spam protection
