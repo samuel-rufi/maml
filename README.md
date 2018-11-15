@@ -28,7 +28,7 @@ java -jar maml.jar
 ```
 
 
-## Library
+## How to use the library
 
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
 
