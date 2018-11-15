@@ -20,29 +20,35 @@ PublicKey publicKey = keys.getPublic();
 PrivateKey privateKey = keys.getPrivate();
 ```
 
-
-
 A channel can be created as follows:
 
-    MAMLite m = new MAMLite(address, password);
-
+```java
+MAMLite m = new MAMLite(address, password);
+```
 Publishing of a message:
-    
-    Message m = new Message("My public data", "My private data", publicKey);
-    m.write(m, privateKey);
-    
+
+```java    
+Message m = new Message("My public data", "My private data", publicKey);
+m.write(m, privateKey);
+```
+
 Reading of a message:
 
-    Message m = m.read();
-    
+```java
+Message m = m.read();
+```
+
 Loading another stream using the same MAML object:
-    
-    m.load(address, password);
+
+```java
+m.load(address, password);
+```
 
 To split a channel, you simply need to change the password. The rest is done automatically:
-    
-    m.split(newPassword);
 
+```java
+m.split(newPassword);
+```
 
 
 
