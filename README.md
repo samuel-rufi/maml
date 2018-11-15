@@ -14,7 +14,7 @@ Features
 I have designed the library to be as easy to use as possible.
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
 
-```java
+```js
 KeyPair keys = RSA.generateKeyPair();
 PublicKey publicKey = keys.getPublic();
 PrivateKey privateKey = keys.getPrivate();
@@ -22,31 +22,31 @@ PrivateKey privateKey = keys.getPrivate();
 
 A channel can be created as follows:
 
-```java
+```js
 MAMLite m = new MAMLite(address, password);
 ```
 Publishing of a message:
 
-```java    
+```js    
 Message m = new Message("My public data", "My private data", publicKey);
 m.write(m, privateKey);
 ```
 
 Reading of a message:
 
-```java
+```js
 Message m = m.read();
 ```
 
 Loading another stream using the same MAML object:
 
-```java
+```js
 m.load(address, password);
 ```
 
 To split a channel, you simply need to change the password. The rest is done automatically:
 
-```java
+```js
 m.split(newPassword);
 ```
 
