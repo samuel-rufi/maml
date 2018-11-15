@@ -14,9 +14,13 @@ Features
 I have designed the library to be as easy to use as possible.
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
 
-     KeyPair keys = RSA.generateKeyPair();
-     PublicKey publicKey = keys.getPublic();
-     PrivateKey privateKey = keys.getPrivate();
+```java
+KeyPair keys = RSA.generateKeyPair();
+PublicKey publicKey = keys.getPublic();
+PrivateKey privateKey = keys.getPrivate();
+```
+
+
 
 A channel can be created as follows:
 
