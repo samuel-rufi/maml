@@ -73,4 +73,4 @@ m.split(newPassword);
 
 * * *
 
-If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769).
+MAM Lite is a work in progress. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769).
