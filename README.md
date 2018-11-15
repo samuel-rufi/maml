@@ -11,7 +11,7 @@ Features
 - Multipart messages (Public & Private)
 - Different encryption modes (OTP and public key encryption for fine grained access)
 
-Every message author does need a RSA key pair. This can be created easily:
+Every author of a message does need a RSA key pair. This can be created easily:
 
      KeyPair keys = RSA.generateKeyPair();
      PublicKey publicKey = keys.getPublic();
