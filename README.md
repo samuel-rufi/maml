@@ -12,6 +12,7 @@ Features
 - Different encryption modes (OTP and public key encryption for fine grained access)
 
 I have designed the library to be as easy to use as possible.
+
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
 
 ```js
