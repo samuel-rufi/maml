@@ -11,7 +11,21 @@ Features
 - Multipart messages (Public & Private)
 - Different encryption modes (OTP and public key encryption for fine grained access)
 
-Creating a channel is very easy:
+Every message author does need a RSA key pair. This can be created easily:
 
-    String channelGenesisAddress = MAMLite.hash("MYCHANNELID",password);
+     KeyPair keys = RSA.generateKeyPair();
+     PublicKey publicKey = keys.getPublic();
+     PrivateKey privateKey = keys.getPrivate();
+
+A channel can be created as follows:
+
     MAMLite m = new MAMLite(channelGenesisAddress, password);
+
+Publishing of a message:
+    
+    Message m = new Message("My public data", "My private data", publicKey);
+    m.write(m, privateKey);
+    
+Reading of a message:
+
+    Message m = m.read();
