@@ -34,7 +34,7 @@ Loading another stream using the same MAML object:
     
     m.load(address, password);
 
-To split a channel, you simply need to change the password:
+To split a channel, you simply need to change the password. The rest is done automatically:
     
     m.split(newPassword);
 
