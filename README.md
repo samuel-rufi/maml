@@ -11,7 +11,7 @@ Features
 - Multipart messages (Public & Private)
 - Different encryption modes (OTP and public key encryption for fine grained access)
 
-I have designed the library to be as easy to use as possible.
+I have designed the library to be as easy to use as possible. MAM Lite is a work in progress. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769).
 
 ## Command line app
 
@@ -66,11 +66,3 @@ To split a channel, you simply need to change the password. The rest is done aut
 ```js
 m.split(newPassword);
 ```
-
-
-
-
-
-* * *
-
-MAM Lite is a work in progress. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769).
