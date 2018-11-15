@@ -13,6 +13,13 @@ Features
 
 I have designed the library to be as easy to use as possible.
 
+To play with the command line app, you need to install Java 8.
+You can find it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+
+
+
+
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
 
 ```js
