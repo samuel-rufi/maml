@@ -20,7 +20,7 @@ You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jr
 
 After you have successfully installed Java, download the maml.jar file: https://github.com/rufsam/...
 
-Open a console/terminal, navigate to the maml.jar file and start it with:
+Open a console/terminal, navigate to it and start it with:
 
 ```js
 java -jar maml.jar
