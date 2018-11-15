@@ -13,7 +13,7 @@ Features
 
 I have designed the library to be as easy to use as possible.
 
-To play with the command line app, you need to install Java 8.
+To play with the command line app, Java 8 must be installed on your system.
 You can find it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 
