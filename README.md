@@ -19,7 +19,7 @@ Every message author does need a RSA key pair. This can be created easily:
 
 A channel can be created as follows:
 
-    MAMLite m = new MAMLite(channelGenesisAddress, password);
+    MAMLite m = new MAMLite(address, password);
 
 Publishing of a message:
     
