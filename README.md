@@ -16,12 +16,12 @@ I have designed the library to be as easy to use as possible.
 ## Command line app
 
 To play with the command line app, Java 8 must be installed.
-You can find it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 After you have successfully installed Java, download the maml.jar
 You can find it here: https://github.com/rufsam/...
 
-Open a console/terminal and start it with
+Open a console/terminal, navigate to the maml.jar file and start it with
 
 ```js
 java -jar maml.jar
