@@ -13,11 +13,17 @@ Features
 
 I have designed the library to be as easy to use as possible.
 
-To play with the command line app, Java 8 must be installed on your system.
+To play with the command line app, Java 8 must be installed.
 You can find it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
+After you have successfully installed Java, download the maml.jar
+You can find it here: https://github.com/rufsam/...
 
+Open a console/terminal and start it with
 
+```js
+java -jar maml.jar
+```
 
 
 Every author of a message does need a RSA key pair. This can be created easily by the provided crypto classes:
