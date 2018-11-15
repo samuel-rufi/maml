@@ -10,3 +10,8 @@ Features
 - Channel splitting
 - Multipart messages (Public & Private)
 - Different encryption modes (OTP and public key encryption for fine grained access)
+
+Creating a channel is very easy:
+
+  String channelGenesisAddress = MAMLite.hash("MYCHANNELID",password);
+  MAMLite m = new MAMLite(channelGenesisAddress, password);
