@@ -33,3 +33,7 @@ Reading of a message:
 Loading another stream using the same MAML object:
     
     m.load(address, password);
+
+To split a channel, you simply need to change the password:
+    
+    m.split(newPassword);
