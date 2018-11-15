@@ -26,11 +26,11 @@ Open a console/terminal, navigate to it and start it with:
 java -jar maml.jar
 ```
 If you want to pass a node manually, run the command line app as follows:
-
+#### Syntax: protocol, host, port, depth, minWeightMagnitude
 ```js
 java -jar maml.jar https nodes.thetangle.org 443 3 14
 ```
-#### Syntax: protocol, host, port, depth, minWeightMagnitude
+
 
 ## How to use the library
 
