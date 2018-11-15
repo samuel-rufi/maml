@@ -30,6 +30,6 @@ Reading of a message:
 
     Message m = m.read();
     
-Loading another stream with the same MAML object:
+Loading another stream using the same MAML object:
     
     m.load(address, password);
