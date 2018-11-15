@@ -13,5 +13,5 @@ Features
 
 Creating a channel is very easy:
 
-  String channelGenesisAddress = MAMLite.hash("MYCHANNELID",password);
-  MAMLite m = new MAMLite(channelGenesisAddress, password);
+    String channelGenesisAddress = MAMLite.hash("MYCHANNELID",password);
+    MAMLite m = new MAMLite(channelGenesisAddress, password);
