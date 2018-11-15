@@ -57,5 +57,3 @@ m.split(newPassword);
 * * *
 
 If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769) 😄
-
-     MORIDNOGBBUQRWPWPLHT9BEYGKQEZDRZWRIZQLSPXMGAMBRAVIKVPFY9MJOKCAJW9IAIDUVEDDUKQYFFCNUTUNEARB
