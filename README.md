@@ -18,7 +18,7 @@ MAM Lite is a work in progress. I have designed the library to be as easy to use
 To play with the command line app, Java 8 must be installed.
 You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
-After you have successfully installed Java, download the maml.jar file: https://github.com/rufsam/...
+After you have successfully installed Java, download the latest maml.jar file: https://github.com/rufsam/...
 
 Open a console/terminal, navigate to it and start it with:
 
