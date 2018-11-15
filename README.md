@@ -47,14 +47,14 @@ A channel can be created as follows:
 ```js
 MAMLite m = new MAMLite(address, password);
 ```
-Publishing of a message:
+Publish a message:
 
 ```js    
 Message m = new Message("My public data", "My private data", publicKey);
 m.write(m, privateKey);
 ```
 
-Reading of a message:
+Read a message:
 
 ```js
 Message m = m.read();
