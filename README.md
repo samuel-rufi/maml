@@ -54,8 +54,8 @@ MAML m = new MAML(address, password);
 Publish a message:
 
 ```js    
-Message m = new Message("My public data", "My private data", publicKey);
-m.write(m, privateKey);
+Message msg = new Message("My public data", "My private data", publicKey);
+m.write(msg, privateKey);
 ```
 
 Read a message:
