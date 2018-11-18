@@ -61,7 +61,7 @@ m.write(m, privateKey);
 Read a message:
 
 ```js
-Message m = m.read();
+Message msg = m.read();
 ```
 
 To split a channel, you simply need to change the password. The rest is done automatically:
