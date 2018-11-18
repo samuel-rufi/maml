@@ -102,7 +102,7 @@ public class MAML {
 
 	}
 
-	private void findEmptyAddress() {
+	private void findEmptyAddressToWrite() {
 
 		String currentReadAddress = this.currentReadAddress;
 
@@ -137,7 +137,7 @@ public class MAML {
 	public String write(Message message, PrivateKey privateKey) throws RSAException {
 
 		if(currentWriteAddress == null)
-			findEmptyAddress();
+			findEmptyAddressToWrite();
 		 else
 			currentWriteAddress = hash(currentWriteAddress + channelPassword);
 		
