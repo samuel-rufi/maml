@@ -47,7 +47,7 @@ A stream can be initialized as follows:
 ```js
 MAML m = new MAML(address);
 ```
-or 
+or using a password:
 ```js
 MAML m = new MAML(address, password);
 ```
@@ -64,7 +64,7 @@ Read a message:
 Message msg = m.read();
 ```
 
-To split a channel, you simply need to change the password. The rest is done automatically:
+To split a channel, you simply need to change the password. The rest will be done automatically:
 
 ```js
 m.split(newPassword);
