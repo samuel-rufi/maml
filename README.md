@@ -45,7 +45,7 @@ PrivateKey privateKey = keys.getPrivate();
 A channel can be created as follows:
 
 ```js
-MAMLite m = new MAMLite(address, password);
+MAML m = new MAML(address, password);
 ```
 Publish a message:
 
