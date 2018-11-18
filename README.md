@@ -42,8 +42,12 @@ PublicKey publicKey = keys.getPublic();
 PrivateKey privateKey = keys.getPrivate();
 ```
 
-A channel can be created as follows:
+A stream can be initialized as follows:
 
+```js
+MAML m = new MAML(address);
+```
+or 
 ```js
 MAML m = new MAML(address, password);
 ```
