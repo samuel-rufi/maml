@@ -38,61 +38,107 @@ public class MAML {
 	public MAML(String rootAddress) {
 		this.rootAddress = rootAddress;
 		this.channelPassword = "";
-		load(rootAddress);
 	}
 
 	public MAML(String rootAddress, String channelPassword) {
-		this.rootAddress = rootAddress;
+		this(rootAddress);
 		this.channelPassword = channelPassword;
-		load(rootAddress);
 	}
 
-	public void load(String rootAddress) {
-		
-		System.out.println("LOADING CHANNEL...");
-		
-		this.rootAddress = rootAddress;
-		currentWriteAddress = null;
-		currentReadAddress = rootAddress;
-		
-		String prevAddress = null;
+	public Message read() throws IOException, RSAException {
+
+		String previousAddress = currentReadAddress;
+
+		if(currentReadAddress == null)
+			currentReadAddress = rootAddress;
+		else
+			currentReadAddress = hash(currentReadAddress + channelPassword);
+
 		List<Transaction> x = null;
-		
+		String data = null;
+
 		do {
-		
+			try {
+
+				x = api.findTransactionObjectsByAddresses(new String[] { currentReadAddress });
+
+				if (x.isEmpty()) {
+					currentReadAddress = previousAddress;
+					return null;
+				}
+
+				data = "";
+				Bundle b = api.bundlesFromAddresses(new String[] {currentReadAddress}, false)[0];
+				for (Transaction t : b.getTransactions())
+					data += t.getSignatureFragments();
+
+				break;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} while (true);
+
+		data = data.substring(0, data.indexOf("999999999"));
+		data = TrytesConverter.trytesToAscii(data);
+
+		JSONObject o = new JSONObject(data);
+
+		String publicData = o.get("public").toString();
+		String privateData = o.get("private").toString();
+		String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
+		String signature = o.get("signature").toString();
+		String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("publicKey").toString()));
+
+		PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
+
+		boolean valid = RSA.verify(hash(publicData + privateData), signature, publicKey);
+
+		Message ret = new Message(publicData, decryptedData, publicKey);
+		ret.setAddress(currentReadAddress);
+		ret.setSignature(signature);
+
+		return ret;
+
+	}
+
+	private void findEmptyAddress() {
+
+		String currentReadAddress = this.currentReadAddress;
+
+		if(currentReadAddress == null)
+			currentReadAddress = rootAddress;
+
+		List<Transaction> x = null;
+
+		do {
+
 			do {
 				try {
 					x = api.findTransactionObjectsByAddresses(new String[] { currentReadAddress });
 					break;
 				} catch (Exception e) { e.printStackTrace(); }
 			} while (true);
-			
-			if(x.isEmpty()) {
-				System.out.println("EMPTY: "+currentReadAddress);
+
+			if(x.isEmpty())
 				break;
-			}
-			
-			System.out.println("DATA FOUND: "+currentReadAddress);
-			
-			prevAddress = currentReadAddress;
+
 			currentReadAddress = hash(currentReadAddress + channelPassword);
-			
+
 		} while(true);
-		
-		if(!currentReadAddress.equals(rootAddress))
-			currentWriteAddress = prevAddress;
-		
-		currentReadAddress = null;
-		
-		System.out.println("CHANNEL LOADED...");
-		
+
+		if(currentReadAddress.equals(rootAddress))
+			currentWriteAddress = rootAddress;
+		else
+			currentWriteAddress = currentReadAddress;
+
 	}
 
 	public String write(Message message, PrivateKey privateKey) throws RSAException {
 
 		if(currentWriteAddress == null)
-			currentWriteAddress = rootAddress;
-		else
+			findEmptyAddress();
+		 else
 			currentWriteAddress = hash(currentWriteAddress + channelPassword);
 		
 		message.setAddress(currentWriteAddress);
@@ -117,80 +163,15 @@ public class MAML {
 
 	}
 
-	public Message read() throws IOException, RSAException {
-		
-		String previousAddress = currentReadAddress;
-		
-		if(currentReadAddress == null)
-			currentReadAddress = rootAddress;
-		else currentReadAddress = hash(currentReadAddress + channelPassword);
-
-		boolean loop = true;
-		List<Transaction> x = null;
-		String data = "";
-		
-		do {
-			try {
-				x = api.findTransactionObjectsByAddresses(new String[] { currentReadAddress });
-				
-				if (x.isEmpty()) {
-					currentReadAddress = previousAddress;
-					return null;
-				}
-				
-				Bundle b = api.bundlesFromAddresses(new String[] {currentReadAddress}, false)[0];
-				for (Transaction t : b.getTransactions())
-					data += t.getSignatureFragments();
-				
-				loop = false;
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} while (loop);
-
-		data = data.substring(0, data.indexOf("999999999"));
-		data = TrytesConverter.trytesToAscii(data);
-		
-		JSONObject o = new JSONObject(data);
-		
-		String publicData = o.get("public").toString();
-		String privateData = o.get("private").toString();
-		String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
-		String signature = o.get("signature").toString();
-		String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("publicKey").toString()));
-		
-		PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
-		
-		boolean valid = RSA.verify(hash(publicData + privateData), signature, publicKey);
-		System.out.println("TRUSTED SIGNATURE: "+valid);
-
-		
-		Message ret = new Message(publicData, decryptedData, publicKey);
-		ret.setAddress(currentReadAddress);
-		ret.setSignature(signature);
-
-		return ret;
-
-	}
-	
 	public void split(String channelPassword) {
 		this.channelPassword = channelPassword;
 		currentReadAddress = currentWriteAddress;
-	}
-	
-	public void setChannelPassword(String channelPassword) {
-		this.channelPassword = channelPassword;
 	}
 	
 	public static String hash(String s) {
 		String hash = Hashing.sha512().hashString(s, StandardCharsets.UTF_8).toString();
 		hash = TrytesConverter.asciiToTrytes(hash).substring(0, 81);
 		return hash;
-	}
-	
-	public static String generateSecureRootAddress(String seed) {
-		return hash(seed);
 	}
 
 }

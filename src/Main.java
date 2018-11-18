@@ -28,9 +28,7 @@ public class Main {
 		System.out.println("CHANNEL START: "+mamChannel);
 		
 		KeyPair keys = RSA.generateKeyPair();
-		
 
-		
 		MAML m = new MAML(mamChannel, password);
 		
 		System.out.println("\nEnter your command. Enter 'help' for help.");
@@ -69,23 +67,9 @@ public class Main {
 				System.out.print("> ");
 				break;
 			}
-			
-			case "load": {
-				System.out.print("Enter address: ");
-				String address = in.nextLine();
-				
-				System.out.print("Enter password: ");
-				String k = in.nextLine();
-				
-				m.setChannelPassword(k);
-				m.load(address);
-				
-				System.out.print("> ");
-				break;
-			}
-			
+
 			case "help": {
-				System.out.println("Following commands are supported:\nwrite\nread\nsplit\nload");
+				System.out.println("Following commands are supported:\nwrite\nread\nsplit");
 				System.out.print("> ");
 				break;
 			}

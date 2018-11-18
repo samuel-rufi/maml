@@ -12,8 +12,8 @@ public class MAMLServer {
 
             try {
                 String address = request.params(":address");
-                m.put(request.ip(), new MAML(address, ""));
-                return "{\"status\": \"success\"}" + request.ip();
+                m.put(request.ip(), new MAML(address));
+                return "{\"status\": \"success\"}";
             } catch (Exception e) {
                 return "{\"status\": \"failure\"}";
             }
@@ -23,12 +23,12 @@ public class MAMLServer {
         get("/read", (request, response) -> {
 
             MAML maml = m.get(request.ip());
-            if (m == null)
-                return "{\"status\": \"failure\"}";
+            if (maml == null)
+                return "{\"status\": \"maml=null\"}";
 
             Message message = maml.read();
             if(message == null)
-                return "{\"status\": \"failure\"}";
+                return "{\"status\": \"message=null\"}";
 
             return message;
 
