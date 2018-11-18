@@ -3,43 +3,42 @@ import crypto.RSA;
 import java.security.KeyPair;
 import java.util.Scanner;
 
-
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
 		if(args.length >= 5) {
-			MAMLite.protocol = args[0];
-			MAMLite.host = args[1];
-			MAMLite.port = args[2];
-			MAMLite.depth = Integer.parseInt(args[3]);
-			MAMLite.minWeightMagnitude = Integer.parseInt(args[4]);	
+			MAML.protocol = args[0];
+			MAML.host = args[1];
+			MAML.port = args[2];
+			MAML.depth = Integer.parseInt(args[3]);
+			MAML.minWeightMagnitude = Integer.parseInt(args[4]);
 		}
 		
-		System.out.println("MAM LITE 1.9\n");
+		System.out.println("MAM Lite 1.1\n");
 		
 		Scanner in = new Scanner(System.in);
 		
-		System.out.print("Enter channel name: ");
-		String seed = in.nextLine();
+		System.out.print("Enter a channel id: ");
+		String channelID = in.nextLine();
 		System.out.print("Enter channel password: ");
-		String sideKey = in.nextLine();
+		String password = in.nextLine();
 
-		String mamChannel = MAMLite.hash(seed);
+		String mamChannel = MAML.hash(channelID+password);
 		System.out.println("CHANNEL START: "+mamChannel);
 		
 		KeyPair keys = RSA.generateKeyPair();
 		
 
 		
-		MAMLite m = new MAMLite(mamChannel, sideKey);
+		MAML m = new MAML(mamChannel, password);
 		
 		System.out.println("\nEnter your command. Enter 'help' for help.");
 		System.out.print("> ");
 		
 		do {
 			
-			switch (in.nextLine()) {
+			switch (in.nextLine().trim()) {
 			
 			case "read": {
 				try {
@@ -90,17 +89,17 @@ public class Main {
 				System.out.print("> ");
 				break;
 			}
+
+			case "exit": {
+			    return;
+			}
+
 			default:
 				System.out.print("> ");
 				break;
 			}
 
 		} while(true);
-		
-
-		
-		
-		
 
 	}
 

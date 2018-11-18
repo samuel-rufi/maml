@@ -20,7 +20,7 @@ import jota.model.Transaction;
 import jota.model.Transfer;
 import jota.utils.TrytesConverter;
 
-public class MAMLite {
+public class MAML {
 
 	public static String protocol = "https";
 	public static String host = "nodes.thetangle.org";
@@ -35,13 +35,13 @@ public class MAMLite {
 	private String currentWriteAddress;
 	private String currentReadAddress;
 
-	public MAMLite(String rootAddress) {
+	public MAML(String rootAddress) {
 		this.rootAddress = rootAddress;
 		this.channelPassword = "";
 		load(rootAddress);
 	}
 
-	public MAMLite(String rootAddress, String channelPassword) {
+	public MAML(String rootAddress, String channelPassword) {
 		this.rootAddress = rootAddress;
 		this.channelPassword = channelPassword;
 		load(rootAddress);
@@ -84,7 +84,7 @@ public class MAMLite {
 		
 		currentReadAddress = null;
 		
-		System.out.println("LOADED...");
+		System.out.println("CHANNEL LOADED...");
 		
 	}
 
@@ -137,7 +137,10 @@ public class MAMLite {
 					currentReadAddress = previousAddress;
 					return null;
 				}
-				
+
+				if(1==1)
+					throw new Exception();
+
 				Bundle b = api.bundlesFromAddresses(new String[] {currentReadAddress}, false)[0];
 				for (Transaction t : b.getTransactions())
 					data += t.getSignatureFragments();
