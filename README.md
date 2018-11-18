@@ -60,12 +60,6 @@ Read a message:
 Message m = m.read();
 ```
 
-Loading another stream using the same MAML object:
-
-```js
-m.load(address, password);
-```
-
 To split a channel, you simply need to change the password. The rest is done automatically:
 
 ```js
