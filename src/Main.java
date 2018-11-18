@@ -19,7 +19,7 @@ public class Main {
 		
 		Scanner in = new Scanner(System.in);
 		
-		System.out.print("Enter a channel id: ");
+		System.out.print("Enter channel id: ");
 		String channelID = in.nextLine();
 		System.out.print("Enter channel password: ");
 		String password = in.nextLine();
@@ -69,13 +69,9 @@ public class Main {
 			}
 
 			case "help": {
-				System.out.println("Following commands are supported:\nwrite\nread\nsplit");
+				System.out.println("Following commands are supported:\nread\nwrite\nsplit");
 				System.out.print("> ");
 				break;
-			}
-
-			case "exit": {
-			    return;
 			}
 
 			default:
