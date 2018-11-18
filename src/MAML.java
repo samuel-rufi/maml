@@ -137,10 +137,7 @@ public class MAML {
 					currentReadAddress = previousAddress;
 					return null;
 				}
-
-				if(1==1)
-					throw new Exception();
-
+				
 				Bundle b = api.bundlesFromAddresses(new String[] {currentReadAddress}, false)[0];
 				for (Transaction t : b.getTransactions())
 					data += t.getSignatureFragments();
