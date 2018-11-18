@@ -42,25 +42,29 @@ PublicKey publicKey = keys.getPublic();
 PrivateKey privateKey = keys.getPrivate();
 ```
 
-A channel can be created as follows:
+A stream can be initialized as follows:
 
+```js
+MAML m = new MAML(address);
+```
+or using a password:
 ```js
 MAML m = new MAML(address, password);
 ```
 Publish a message:
 
 ```js    
-Message m = new Message("My public data", "My private data", publicKey);
-m.write(m, privateKey);
+Message msg = new Message("My public data", "My private data", publicKey);
+m.write(msg, privateKey);
 ```
 
 Read a message:
 
 ```js
-Message m = m.read();
+Message msg = m.read();
 ```
 
-To split a channel, you simply need to change the password. The rest is done automatically:
+To split a channel, you simply need to change the password. The rest will be done automatically:
 
 ```js
 m.split(newPassword);
