@@ -94,9 +94,13 @@ http://localhost:4567
 
 Initialize stream with an address:
 ```js
-http://localhost:4567/load/ADDRESS
+http://localhost:4567/load/YOUR_ADDRESS
 ```
 if the stream is password protected:
 ```js
 http://localhost:4567/load/YOUR_ADDRESS/PASSWORD
+```
+read a stream (message per message):
+```js
+http://localhost:4567/read
 ```
