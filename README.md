@@ -87,7 +87,7 @@ If you want to pass a node manually, run it as follows:
 ```js
 java -jar maml.server.jar http localhost 80 3 14
 ```
-#### Access the REST API as follows:
+### Access the REST API as follows:
 
 Initialize a stream:
 ```js
