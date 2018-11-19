@@ -8,6 +8,14 @@ public class MAMLServer {
 
     public static void main(String[] args) {
 
+        if(args.length >= 5) {
+            MAML.protocol = args[0];
+            MAML.host = args[1];
+            MAML.port = args[2];
+            MAML.depth = Integer.parseInt(args[3]);
+            MAML.minWeightMagnitude = Integer.parseInt(args[4]);
+        }
+
         get("/load/:address", (request, response) -> {
             String address = request.params(":address");
             m.put(request.ip(), new MAML(address));
