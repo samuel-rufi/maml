@@ -13,7 +13,7 @@ Features
 
 MAM Lite is a work in progress. I have designed the library to be as easy to use as possible. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769) or you can send me an email at samuel.rufinatscha@gmail.com
 
-## Command line app
+## Console app
 
 To play with the command line app, Java 8 must be installed.
 You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
@@ -68,4 +68,35 @@ To split a channel, you simply need to change the password. The rest will be don
 
 ```js
 m.split(newPassword);
+```
+
+## How to use MAML in servermode
+
+To use MAML in servermode, Java 8 must be installed.
+You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+After you have successfully installed Java, download the latest maml.server.jar file: https://github.com/rufsam/maml/releases/tag/maml.jar
+
+Open a console/terminal, navigate to it and start it with:
+
+```js
+java -jar maml.server.jar
+```
+If you want to pass a node manually, run the command line app as follows:
+#### Syntax: protocol, host, port, depth, minWeightMagnitude
+```js
+java -jar maml.server.jar http localhost 443 3 14
+```
+You will be able to access the REST api as follows:
+```js
+http://localhost:4567
+```
+
+Initialize stream with an address:
+```js
+http://localhost:4567/load/ADDRESS
+```
+if the stream is password protected:
+```js
+http://localhost:4567/load/YOUR_ADDRESS/PASSWORD
 ```
