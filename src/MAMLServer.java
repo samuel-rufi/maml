@@ -9,26 +9,27 @@ public class MAMLServer {
     public static void main(String[] args) {
 
         get("/load/:address", (request, response) -> {
+            String address = request.params(":address");
+            m.put(request.ip(), new MAML(address));
+            return "{\"status\": \"success\"}";
+        });
 
-            try {
-                String address = request.params(":address");
-                m.put(request.ip(), new MAML(address));
-                return "{\"status\": \"success\"}";
-            } catch (Exception e) {
-                return "{\"status\": \"failure\"}";
-            }
-
+        get("/load/:address/:password", (request, response) -> {
+            String address = request.params(":address");
+            String password = request.params(":password");
+            m.put(request.ip(), new MAML(address,password));
+            return "{\"status\": \"success\"}";
         });
 
         get("/read", (request, response) -> {
 
             MAML maml = m.get(request.ip());
             if (maml == null)
-                return "{\"status\": \"maml=null\"}";
+                return "{\"message\": \"null\"}";
 
             Message message = maml.read();
             if(message == null)
-                return "{\"status\": \"message=null\"}";
+                return "{\"message\": \"null\"}";
 
             return message;
 
