@@ -90,7 +90,6 @@ public class MAML {
 			String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
 			String signature = o.get("sig").toString();
 			String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("pk").toString()));
-
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
 			boolean valid = RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
@@ -166,9 +165,10 @@ public class MAML {
 
 	}
 
-	public void split(String channelPassword) {
+	public String split(String channelPassword) {
 		this.channelPassword = channelPassword;
 		currentReadAddress = currentWriteAddress;
+		return hash(currentReadAddress + channelPassword);
 	}
 	
 	public static String hash(String s) {
