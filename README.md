@@ -75,7 +75,7 @@ m.split(newPassword);
 To use MAML in server mode, Java 8 must be installed.
 You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
-After you have successfully installed Java, download the latest maml.server.jar file: https://github.com/rufsam/maml/releases/tag/maml.jar
+After you have successfully installed Java, download the latest maml.server.jar file: https://github.com/rufsam/maml/releases/tag/maml.server.jar
 
 Open a console/terminal, navigate to it and start it with:
 
