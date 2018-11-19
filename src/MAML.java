@@ -93,7 +93,7 @@ public class MAML {
 
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
-			boolean valid = RSA.verify(hash(publicData + privateData), signature, publicKey);
+			boolean valid = RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
 
 			Message ret = new Message(publicData, decryptedData, publicKey);
 			ret.setSignature(signature);
@@ -114,7 +114,7 @@ public class MAML {
 			currentWriteAddress = hash(currentWriteAddress + channelPassword);
 
 		message.finalize(currentWriteAddress + channelPassword);
-		message.setSignature(RSA.sign(hash(message.getPublicData() + message.getPrivateData()), privateKey));
+		message.setSignature(RSA.sign(hash(currentWriteAddress + message.getPublicData() + message.getPrivateData()), privateKey));
 		
 		List<Transfer> transfers = new ArrayList<>();
 		Transfer t = new Transfer(currentWriteAddress, 0, TrytesConverter.asciiToTrytes(message.toString()), "");
