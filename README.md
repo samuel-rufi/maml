@@ -97,7 +97,7 @@ If the stream is password protected:
 ```js
 http://localhost:4567/load/YOUR_ADDRESS/PASSWORD
 ```
-Read a stream (message per message):
+Read a message:
 ```js
 http://localhost:4567/read
 ```
