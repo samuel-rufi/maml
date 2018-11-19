@@ -13,7 +13,7 @@ Features
 
 MAM Lite is a work in progress. I have designed the library to be as easy to use as possible. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769) or you can send me an email at samuel.rufinatscha@gmail.com
 
-## Console app
+## Console App
 
 To play with the command line app, Java 8 must be installed.
 You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
@@ -25,7 +25,7 @@ Open a console/terminal, navigate to it and start it with:
 ```js
 java -jar maml.jar
 ```
-If you want to pass a node manually, run the command line app as follows:
+If you want to pass a node manually, run it as follows:
 #### Syntax: protocol, host, port, depth, minWeightMagnitude
 ```js
 java -jar maml.jar https nodes.thetangle.org 443 3 14
@@ -70,9 +70,9 @@ To split a channel, you simply need to change the password. The rest will be don
 m.split(newPassword);
 ```
 
-## How to use MAML in servermode
+## How to use MAML in server mode
 
-To use MAML in servermode, Java 8 must be installed.
+To use MAML in server mode, Java 8 must be installed.
 You can get it here: https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 After you have successfully installed Java, download the latest maml.server.jar file: https://github.com/rufsam/maml/releases/tag/maml.jar
@@ -82,7 +82,7 @@ Open a console/terminal, navigate to it and start it with:
 ```js
 java -jar maml.server.jar
 ```
-If you want to pass a node manually, run the command line app as follows:
+If you want to pass a node manually, run it as follows:
 #### Syntax: protocol, host, port, depth, minWeightMagnitude
 ```js
 java -jar maml.server.jar http localhost 443 3 14
