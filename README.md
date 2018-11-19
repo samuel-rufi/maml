@@ -87,7 +87,7 @@ If you want to pass a node manually, run it as follows:
 ```js
 java -jar maml.server.jar http localhost 80 3 14
 ```
-You will be able to access the REST api as follows:
+You will be able to access the REST API as follows:
 ```js
 http://localhost:4567
 ```
