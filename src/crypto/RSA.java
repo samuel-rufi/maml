@@ -46,7 +46,6 @@ public class RSA {
 		} catch (Exception e) {
 			throw new RSAException(e);
 		}
-
 	}
 
 	public static boolean verify(String plainText, String signature, PublicKey publicKey) throws RSAException {

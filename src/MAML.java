@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -45,7 +44,7 @@ public class MAML {
 		this.channelPassword = channelPassword;
 	}
 
-	public Message read() throws IOException, RSAException {
+	public MessageResponse read() {
 
 		String previousAddress = currentReadAddress;
 
@@ -79,30 +78,63 @@ public class MAML {
 			}
 		} while (true);
 
-		data = data.substring(0, data.indexOf("999999999"));
-		data = TrytesConverter.trytesToAscii(data);
+		try {
 
-		JSONObject o = new JSONObject(data);
+			data = data.substring(0, data.indexOf("999999999"));
+			data = TrytesConverter.trytesToAscii(data);
 
-		String publicData = o.get("public").toString();
-		String privateData = o.get("private").toString();
-		String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
-		String signature = o.get("signature").toString();
-		String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("publicKey").toString()));
+			JSONObject o = new JSONObject(data);
 
-		PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
+			String publicData = o.get("public").toString();
+			String privateData = o.get("private").toString();
+			String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
+			String signature = o.get("sig").toString();
+			String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("pk").toString()));
 
-		boolean valid = RSA.verify(hash(publicData + privateData), signature, publicKey);
+			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
-		Message ret = new Message(publicData, decryptedData, publicKey);
-		ret.setAddress(currentReadAddress);
-		ret.setSignature(signature);
+			boolean valid = RSA.verify(hash(publicData + privateData), signature, publicKey);
 
-		return ret;
+			Message ret = new Message(publicData, decryptedData, publicKey);
+			ret.setSignature(signature);
+
+			return new MessageResponse(currentReadAddress, ret);
+
+		} catch (Exception e) {
+			return new MessageResponse(currentReadAddress,null);
+		}
 
 	}
 
-	private void findEmptyAddressToWrite() {
+	public MessageResponse write(Message message, PrivateKey privateKey) throws RSAException {
+
+		if(currentWriteAddress == null)
+			findEmptyAddress();
+		 else
+			currentWriteAddress = hash(currentWriteAddress + channelPassword);
+
+		message.finalize(currentWriteAddress + channelPassword);
+		message.setSignature(RSA.sign(hash(message.getPublicData() + message.getPrivateData()), privateKey));
+		
+		List<Transfer> transfers = new ArrayList<>();
+		Transfer t = new Transfer(currentWriteAddress, 0, TrytesConverter.asciiToTrytes(message.toString()), "");
+		transfers.add(t);
+		
+		boolean loop = true;
+		do {
+			try {
+				api.sendTransfer(rootAddress, 2, depth, minWeightMagnitude, transfers, null, currentWriteAddress, false, false, null);
+				loop = false;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} while (loop);
+
+		return new MessageResponse(currentWriteAddress, message);
+
+	}
+
+	private void findEmptyAddress() {
 
 		String currentReadAddress = this.currentReadAddress;
 
@@ -134,42 +166,13 @@ public class MAML {
 
 	}
 
-	public String write(Message message, PrivateKey privateKey) throws RSAException {
-
-		if(currentWriteAddress == null)
-			findEmptyAddressToWrite();
-		 else
-			currentWriteAddress = hash(currentWriteAddress + channelPassword);
-		
-		message.setAddress(currentWriteAddress);
-		message.finalize(currentWriteAddress + channelPassword);
-		message.setSignature(RSA.sign(hash(message.getPublicData() + message.getPrivateData()), privateKey));
-		
-		List<Transfer> transfers = new ArrayList<>();
-		Transfer t = new Transfer(currentWriteAddress, 0, TrytesConverter.asciiToTrytes(message.toString()), "");
-		transfers.add(t);
-		
-		boolean loop = true;
-		do {
-			try {
-				api.sendTransfer(rootAddress, 2, depth, minWeightMagnitude, transfers, null, currentWriteAddress, false, false, null);
-				loop = false;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} while (loop);
-		
-		return message.toString();
-
-	}
-
 	public void split(String channelPassword) {
 		this.channelPassword = channelPassword;
 		currentReadAddress = currentWriteAddress;
 	}
 	
 	public static String hash(String s) {
-		String hash = Hashing.sha512().hashString(s, StandardCharsets.UTF_8).toString();
+		String hash = Hashing.sha256().hashString(s, StandardCharsets.UTF_8).toString();
 		hash = TrytesConverter.asciiToTrytes(hash).substring(0, 81);
 		return hash;
 	}

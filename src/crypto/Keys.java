@@ -61,14 +61,14 @@ public final class Keys {
             return createPublicKey(new X509EncodedKeySpec(pemObject.getContent()));
         }
     }
-    
+
     public static void writePrivateKey(PrivateKey privateKey, File file) throws IOException, IllegalStateException {
         try (PemWriter writer = new PemWriter(new FileWriter(file))) {
         	PemObject o = new PemObject("PRIVATE KEY", privateKey.getEncoded());
         	writer.writeObject(o);
         }
     }
-    
+
     public static void writePublicKey(PublicKey publicKey, File file) throws IOException, IllegalStateException {
         try (PemWriter writer = new PemWriter(new FileWriter(file))) {
         	PemObject o = new PemObject("PUBLIC KEY", publicKey.getEncoded());
@@ -99,7 +99,7 @@ public final class Keys {
             throw new IllegalStateException("Error creating crypto.RSA key factory with bouncycastle", e);
         }
     }
-    
+
 	public static String toPEM(Key key) {
 		try {
 			StringWriter writer = new StringWriter();
@@ -113,14 +113,14 @@ public final class Keys {
 		}
 		return null;
 	}
-    
+
 	public static Key fromPEM(String pem) throws IOException {
 		try (PemReader pemReader = new PemReader(new StringReader(pem))) {
-			PemObject pemObject = pemReader.readPemObject();
-			if (pem.contains("PUBLIC"))
-				return createPublicKey(new X509EncodedKeySpec(pemObject.getContent()));
-			return createPrivateKey(new X509EncodedKeySpec(pemObject.getContent()));
-		}
+            PemObject pemObject = pemReader.readPemObject();
+            if (pem.contains("PUBLIC"))
+                return createPublicKey(new X509EncodedKeySpec(pemObject.getContent()));
+            return createPrivateKey(new X509EncodedKeySpec(pemObject.getContent()));
+        }
 	}
 
 }

@@ -6,7 +6,6 @@ import java.util.Base64;
 
 public class Message {
 
-	private String address;
 	private String publicData;
 	private String privateData;
 	private PublicKey publicKey;
@@ -17,17 +16,9 @@ public class Message {
 		this.privateData = privateData;
 		this.publicKey = publicKey;
 	}
-	
-	public void setPublicData(String publicData) {
-		this.publicData = publicData;
-	}
 
 	public String getPublicData() {
 		return publicData;
-	}
-	
-	public void setPrivateData(String privateData) {
-		this.privateData = privateData;
 	}
 	
 	public PublicKey getPublicKey() {
@@ -50,17 +41,9 @@ public class Message {
 		this.privateData = OTP.encrypt(privateData, password);
 	}
 	
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
 	@Override
 	public String toString() {
-		return "{\"address\": \""+address+"\",\"public\": \""+publicData+"\", \"private\": \""+privateData+"\", \"publicKey\": \""+Base64.getEncoder().encodeToString(Keys.toPEM(publicKey).getBytes())+"\", \"signature\": \""+signature+"\"}";
+		return "{\"public\": \""+publicData+"\", \"private\": \""+privateData+"\", \"pk\": \""+Base64.getEncoder().encodeToString(Keys.toPEM(publicKey).getBytes())+"\", \"sig\": \""+signature+"\"}";
 	}
 
 }

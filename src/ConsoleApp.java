@@ -3,7 +3,7 @@ import crypto.RSA;
 import java.security.KeyPair;
 import java.util.Scanner;
 
-public class Main {
+public class ConsoleApp {
 
 	public static void main(String[] args) throws Exception {
 		
@@ -40,7 +40,11 @@ public class Main {
 			
 			case "read": {
 				try {
-				System.out.println(m.read());
+					MessageResponse r = m.read();
+					if(r != null)
+						System.out.println(r.getAddress() + " -> " + (r.getMessage() == null? "unable to read content" : r.getMessage()));
+					else
+						System.out.println("null");
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -54,7 +58,11 @@ public class Main {
 				System.out.print("Enter private data: ");
 				String pData = in.nextLine();
 				Message msg = new Message(data, pData, keys.getPublic());
-				System.out.println(m.write(msg, keys.getPrivate()));
+				MessageResponse r = m.write(msg, keys.getPrivate());
+				if(r != null)
+					System.out.println(r.getAddress() + " -> " + r.getMessage());
+				else
+					System.out.println("null");
 				System.out.print("> ");
 				break;
 			}

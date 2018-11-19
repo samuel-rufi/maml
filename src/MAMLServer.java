@@ -19,14 +19,14 @@ public class MAMLServer {
         get("/load/:address", (request, response) -> {
             String address = request.params(":address");
             m.put(request.ip(), new MAML(address));
-            return "{\"status\": \"success\"}";
+            return "{\"status\": \"ok\"}";
         });
 
         get("/load/:address/:password", (request, response) -> {
             String address = request.params(":address");
             String password = request.params(":password");
             m.put(request.ip(), new MAML(address,password));
-            return "{\"status\": \"success\"}";
+            return "{\"status\": \"ok\"}";
         });
 
         get("/read", (request, response) -> {
@@ -35,11 +35,12 @@ public class MAMLServer {
             if (maml == null)
                 return "{\"message\": \"null\"}";
 
-            Message message = maml.read();
-            if(message == null)
+            MessageResponse r = maml.read();
+            if(r == null )
                 return "{\"message\": \"null\"}";
-
-            return message;
+            if(r.getMessage() == null)
+                return "{\"message\": \"unable to read content\"}";
+            return r.getMessage();
 
         });
 
