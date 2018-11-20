@@ -91,15 +91,11 @@ java -jar maml.server.jar http localhost 80 3 14
 
 ### Access the REST API as follows:
 
-Initialize a stream:
-```js
-http://localhost:4567/load/YOUR_ADDRESS
-```
-If the stream is password protected:
-```js
-http://localhost:4567/load/YOUR_ADDRESS/PASSWORD
-```
 Read a message:
 ```js
-http://localhost:4567/read
+http://localhost:4567/read/YOUR_ADDRESS
+```
+If the message is password protected:
+```js
+http://localhost:4567/read/YOUR_ADDRESS/PASSWORD
 ```
