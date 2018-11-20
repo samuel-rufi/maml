@@ -26,9 +26,10 @@ public class MAML {
 	public static String port = "443";
 	public static int depth = 3;
 	public static int minWeightMagnitude = 14;
-	
+
 	private IotaAPI api = new IotaAPI.Builder().protocol(protocol).host(host).port(port).build();
 
+    public List<PublicKey> trustedKeys = new ArrayList<>();
 	private String rootAddress;
 	private String channelPassword;
 	private String currentWriteAddress;
@@ -92,15 +93,17 @@ public class MAML {
 			String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("pk").toString()));
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
-			boolean valid = RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
+			boolean isTrusted = true;
+            if(trustedKeys.size() != 0)
+                isTrusted = trustedKeys.contains(publicKey) && RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
 
 			Message ret = new Message(publicData, decryptedData, publicKey);
 			ret.setSignature(signature);
 
-			return new MessageResponse(currentReadAddress, ret);
+			return new MessageResponse(currentReadAddress, ret, isTrusted);
 
 		} catch (Exception e) {
-			return new MessageResponse(currentReadAddress,null);
+			return new MessageResponse(currentReadAddress,null, false);
 		}
 
 	}
@@ -129,7 +132,7 @@ public class MAML {
 			}
 		} while (loop);
 
-		return new MessageResponse(currentWriteAddress, message);
+		return new MessageResponse(currentWriteAddress, message, true);
 
 	}
 
@@ -170,7 +173,7 @@ public class MAML {
 		currentReadAddress = currentWriteAddress;
 		return hash(currentReadAddress + channelPassword);
 	}
-	
+
 	public static String hash(String s) {
 		String hash = Hashing.sha256().hashString(s, StandardCharsets.UTF_8).toString();
 		hash = TrytesConverter.asciiToTrytes(hash).substring(0, 81);
