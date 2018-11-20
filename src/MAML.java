@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import crypto.*;
 import org.json.JSONObject;
 
 import com.google.common.hash.Hashing;
 
-import crypto.Keys;
-import crypto.OTP;
-import crypto.RSA;
-import crypto.RSAException;
 import jota.IotaAPI;
 import jota.model.Bundle;
 import jota.model.Transaction;
@@ -26,10 +23,10 @@ public class MAML {
 	public static String port = "443";
 	public static int depth = 3;
 	public static int minWeightMagnitude = 14;
+	public List<PublicKey> trustedKeys = new ArrayList<>();
 
 	private IotaAPI api = new IotaAPI.Builder().protocol(protocol).host(host).port(port).build();
 
-    public List<PublicKey> trustedKeys = new ArrayList<>();
 	private String rootAddress;
 	private String channelPassword;
 	private String currentWriteAddress;
@@ -88,7 +85,12 @@ public class MAML {
 
 			String publicData = o.get("public").toString();
 			String privateData = o.get("private").toString();
-			String decryptedData = OTP.decrypt(privateData, currentReadAddress+channelPassword);
+
+			String decryptedData = null;
+			try {
+				decryptedData = AES.decrypt(privateData, channelPassword);
+			} catch (AESException e) { decryptedData = privateData; }
+
 			String signature = o.get("sig").toString();
 			String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("pk").toString()));
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
@@ -100,22 +102,22 @@ public class MAML {
 			Message ret = new Message(publicData, decryptedData, publicKey);
 			ret.setSignature(signature);
 
-			return new MessageResponse(currentReadAddress, ret, isTrusted);
+			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), ret, isTrusted);
 
 		} catch (Exception e) {
-			return new MessageResponse(currentReadAddress,null, false);
+			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), null, false);
 		}
 
 	}
 
-	public MessageResponse write(Message message, PrivateKey privateKey) throws RSAException {
+	public MessageResponse write(Message message, PrivateKey privateKey) throws RSAException, AESException {
 
 		if(currentWriteAddress == null)
 			findEmptyAddress();
 		 else
 			currentWriteAddress = hash(currentWriteAddress + channelPassword);
 
-		message.finalize(currentWriteAddress + channelPassword);
+		message.setPrivateData(AES.encrypt(message.getPrivateData(),channelPassword));
 		message.setSignature(RSA.sign(hash(currentWriteAddress + message.getPublicData() + message.getPrivateData()), privateKey));
 		
 		List<Transfer> transfers = new ArrayList<>();
@@ -125,14 +127,14 @@ public class MAML {
 		boolean loop = true;
 		do {
 			try {
-				api.sendTransfer(rootAddress, 2, depth, minWeightMagnitude, transfers, null, currentWriteAddress, false, false, null);
+				api.sendTransfer(currentWriteAddress, 2, depth, minWeightMagnitude, transfers, null, currentWriteAddress, false, false, null);
 				loop = false;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} while (loop);
 
-		return new MessageResponse(currentWriteAddress, message, true);
+		return new MessageResponse(currentWriteAddress, hash(currentWriteAddress + channelPassword), message, true);
 
 	}
 

@@ -1,10 +1,8 @@
-import java.util.HashMap;
+import jota.utils.InputValidator;
 
 import static spark.Spark.get;
 
 public class MAMLServer {
-
-    private static HashMap<String, MAML> m = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -16,32 +14,27 @@ public class MAMLServer {
             MAML.minWeightMagnitude = Integer.parseInt(args[4]);
         }
 
-        get("/load/:address", (request, response) -> {
+        get("/read/:address", (request, response) -> {
             String address = request.params(":address");
-            m.put(request.ip(), new MAML(address));
-            return "{\"status\": \"ok\"}";
-        });
-
-        get("/load/:address/:password", (request, response) -> {
-            String address = request.params(":address");
-            String password = request.params(":password");
-            m.put(request.ip(), new MAML(address,password));
-            return "{\"status\": \"ok\"}";
-        });
-
-        get("/read", (request, response) -> {
-
-            MAML maml = m.get(request.ip());
-            if (maml == null)
-                return "{\"message\": \"null\"}";
-
+            if(!InputValidator.isAddress(address))
+                return "{\"message\": \"invalid address provided\"}";
+            MAML maml = new MAML(address);
             MessageResponse r = maml.read();
             if(r == null )
                 return "{\"message\": \"null\"}";
-            if(r.getMessage() == null)
-                return "{\"message\": \"unable to read content\"}";
-            return r.getMessage();
+            return r;
+        });
 
+        get("/read/:address/:password", (request, response) -> {
+            String address = request.params(":address");
+            String password = request.params(":password");
+            if(!InputValidator.isAddress(address))
+                return "{\"message\": \"invalid address provided\"}";
+            MAML maml = new MAML(address, password);
+            MessageResponse r = maml.read();
+            if(r == null )
+                return "{\"message\": \"null\"}";
+            return r;
         });
 
     }

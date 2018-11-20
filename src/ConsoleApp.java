@@ -42,7 +42,7 @@ public class ConsoleApp {
 				try {
 					MessageResponse r = m.read();
 					if(r != null)
-						System.out.println(r.getAddress() + " -> " + (r.getMessage() == null? "unable to read content" : r.getMessage()));
+						System.out.println(r.getAddress() + " -> " + (r.getMessage() == null? "unable to read content" : r));
 					else
 						System.out.println("null");
 				} catch(Exception e) {
@@ -60,7 +60,7 @@ public class ConsoleApp {
 				Message msg = new Message(data, pData, keys.getPublic());
 				MessageResponse r = m.write(msg, keys.getPrivate());
 				if(r != null)
-					System.out.println(r.getAddress() + " -> " + r.getMessage());
+					System.out.println(r.getAddress() + " -> " + r);
 				else
 					System.out.println("null");
 				System.out.print("> ");

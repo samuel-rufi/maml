@@ -1,5 +1,4 @@
 import crypto.Keys;
-import crypto.OTP;
 
 import java.security.PublicKey;
 import java.util.Base64;
@@ -24,6 +23,10 @@ public class Message {
 	public PublicKey getPublicKey() {
 		return publicKey;
 	}
+
+	public void setPrivateData(String privateData) {
+		this.privateData = privateData;
+	}
 	
 	public String getPrivateData() {
 		return privateData;
@@ -37,9 +40,7 @@ public class Message {
 		return signature;
 	}
 	
-	public void finalize(String password) {
-		this.privateData = OTP.encrypt(privateData, password);
-	}
+
 	
 	@Override
 	public String toString() {
