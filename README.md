@@ -9,7 +9,7 @@ Features
 - Stream access from every address
 - Channel splitting
 - Multipart messages (Public & Private)
-- Different encryption modes (OTP and public key encryption for fine grained access)
+- Different encryption modes (AES and public key encryption for fine grained access)
 
 MAM Lite is a work in progress. I have designed the library to be as easy to use as possible. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769) or you can send me an email at samuel.rufinatscha@gmail.com
 
