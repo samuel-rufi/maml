@@ -94,7 +94,7 @@ public class MAML {
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
 			boolean isTrusted = true;
-            if(trustedKeys.size() != 0)
+            if(trustedKeys.size() > 0)
                 isTrusted = trustedKeys.contains(publicKey) && RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
 
 			Message ret = new Message(publicData, decryptedData, publicKey);
