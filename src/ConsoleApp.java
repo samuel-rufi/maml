@@ -15,7 +15,7 @@ public class ConsoleApp {
 			MAML.minWeightMagnitude = Integer.parseInt(args[4]);
 		}
 		
-		System.out.println("MAM Lite 1.1\n");
+		System.out.println("MAM Lite 1.3\n");
 		
 		Scanner in = new Scanner(System.in);
 		

@@ -1,9 +1,7 @@
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 import crypto.*;
 import org.json.JSONObject;
@@ -30,7 +28,7 @@ public class MAML {
 	private String channelPassword;
 	private String currentWriteAddress;
 	private String currentReadAddress;
-	private List<PublicKey> trustedAuthors = new ArrayList<>();
+	private Set<PublicKey> trustedAuthors = new HashSet<>();
 
 	public MAML(String rootAddress) {
 		this.rootAddress = rootAddress;
@@ -185,7 +183,7 @@ public class MAML {
 		return hash;
 	}
 
-	public List<PublicKey> getTrustedAuthors() {
+	public Set<PublicKey> getTrustedAuthors() {
 		return trustedAuthors;
 	}
 
