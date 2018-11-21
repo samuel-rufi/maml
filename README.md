@@ -61,13 +61,13 @@ m.write(msg, privateKey);
 Read a message:
 
 ```js
-Message msg = m.read();
+MessageResponse msg = m.read();
 ```
 
 To split a channel, you simply need to change the password. The rest will be done automatically:
 
 ```js
-m.split(newPassword);
+String nextAddress = m.split(newPassword);
 ```
 
 To trust messages only from a specific set of users, put the appropriate public keys in the keystore:
