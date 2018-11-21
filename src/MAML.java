@@ -78,8 +78,6 @@ public class MAML {
 
 		try {
 
-            // Data was found on address
-
 			data = data.substring(0, data.indexOf("999999999"));
 			data = TrytesConverter.trytesToAscii(data);
 
