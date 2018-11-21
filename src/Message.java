@@ -39,12 +39,10 @@ public class Message {
 	public String getSignature() {
 		return signature;
 	}
-	
 
-	
 	@Override
 	public String toString() {
-		return "{\"public\": \""+publicData+"\", \"private\": \""+privateData+"\", \"pk\": \""+Base64.getEncoder().encodeToString(Keys.toPEM(publicKey).getBytes())+"\", \"sig\": \""+signature+"\"}";
+		return "{\"public\": \""+publicData+"\", \"private\": \""+privateData+"\", \"pk\": \""+Keys.publicKeyToString(publicKey)+"\", \"sig\": \""+signature+"\"}";
 	}
 
 }

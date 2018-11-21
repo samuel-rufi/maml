@@ -78,6 +78,8 @@ public class MAML {
 
 		try {
 
+            // Data was found on address
+
 			data = data.substring(0, data.indexOf("999999999"));
 			data = TrytesConverter.trytesToAscii(data);
 
@@ -92,8 +94,7 @@ public class MAML {
 			} catch (AESException e) { decryptedData = privateData; }
 
 			String signature = o.get("sig").toString();
-			String publicKeyPEM = new String(Base64.getDecoder().decode(o.get("pk").toString()));
-			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
+			PublicKey publicKey = Keys.loadPublicKey(o.get("pk").toString());
 
 			boolean isTrusted = true;
             if(trustedAuthors.size() > 0)
@@ -185,4 +186,5 @@ public class MAML {
 	public List<PublicKey> getTrustedAuthors() {
 		return trustedAuthors;
 	}
+
 }
