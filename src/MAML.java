@@ -23,7 +23,6 @@ public class MAML {
 	public static String port = "443";
 	public static int depth = 3;
 	public static int minWeightMagnitude = 14;
-	public List<PublicKey> trustedKeys = new ArrayList<>();
 
 	private IotaAPI api = new IotaAPI.Builder().protocol(protocol).host(host).port(port).build();
 
@@ -31,6 +30,7 @@ public class MAML {
 	private String channelPassword;
 	private String currentWriteAddress;
 	private String currentReadAddress;
+	private List<PublicKey> trustedAuthors = new ArrayList<>();
 
 	public MAML(String rootAddress) {
 		this.rootAddress = rootAddress;
@@ -96,8 +96,8 @@ public class MAML {
 			PublicKey publicKey = (PublicKey) Keys.fromPEM(publicKeyPEM);
 
 			boolean isTrusted = true;
-            if(trustedKeys.size() > 0)
-                isTrusted = trustedKeys.contains(publicKey) && RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
+            if(trustedAuthors.size() > 0)
+                isTrusted = trustedAuthors.contains(publicKey) && RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
 
 			Message ret = new Message(publicData, decryptedData, publicKey);
 			ret.setSignature(signature);
@@ -182,4 +182,7 @@ public class MAML {
 		return hash;
 	}
 
+	public List<PublicKey> getTrustedAuthors() {
+		return trustedAuthors;
+	}
 }
