@@ -9,7 +9,7 @@ Features
 - Stream access from every address
 - Channel splitting
 - Multipart messages (Public & Private)
-- Different encryption modes (OTP and public key encryption for fine grained access)
+- Different encryption modes (AES and public key encryption for fine grained access)
 
 MAM Lite is a work in progress. I have designed the library to be as easy to use as possible. If you have any questions, I'm happy to answer them. You can find me on Discord (Samuel Rufinatscha#2769) or you can send me an email at samuel.rufinatscha@gmail.com
 
@@ -70,6 +70,14 @@ To split a channel, you simply need to change the password. The rest will be don
 m.split(newPassword);
 ```
 
+To trust only specific users, put their public keys in the keystore:
+
+```js
+m.getTrustedAuthors().add(publicKeyOfBob);
+m.getTrustedAuthors().add(publicKeyOfAlice);
+...
+```
+
 ## How to use MAML in server mode
 
 To use MAML in server mode, Java 8 must be installed.
@@ -91,15 +99,11 @@ java -jar maml.server.jar http localhost 80 3 14
 
 ### Access the REST API as follows:
 
-Initialize a stream:
-```js
-http://localhost:4567/load/YOUR_ADDRESS
-```
-If the stream is password protected:
-```js
-http://localhost:4567/load/YOUR_ADDRESS/PASSWORD
-```
 Read a message:
 ```js
-http://localhost:4567/read
+http://localhost:4567/read/YOUR_ADDRESS
+```
+If the message is password protected:
+```js
+http://localhost:4567/read/YOUR_ADDRESS/PASSWORD
 ```
