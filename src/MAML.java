@@ -97,8 +97,10 @@ public class MAML {
 			PublicKey publicKey = Keys.loadPublicKey(o.get("pk").toString());
 
 			boolean isTrusted = true;
-            if(trustedAuthors.size() > 0)
-                isTrusted = trustedAuthors.contains(publicKey) && RSA.verify(hash(currentReadAddress + publicData + privateData), signature, publicKey);
+            if(trustedAuthors.size() > 0) {
+                String hash = Hashing.sha256().hashString(currentReadAddress + publicData + privateData, StandardCharsets.UTF_8).toString();
+                isTrusted = trustedAuthors.contains(publicKey) && RSA.verify(hash, signature, publicKey);
+            }
 
 			Message ret = new Message(publicData, decryptedData, publicKey);
 			ret.setSignature(signature);
@@ -119,7 +121,9 @@ public class MAML {
 			currentWriteAddress = hash(currentWriteAddress + channelPassword);
 
 		message.setPrivateData(AES.encrypt(message.getPrivateData(),channelPassword));
-		message.setSignature(RSA.sign(hash(currentWriteAddress + message.getPublicData() + message.getPrivateData()), privateKey));
+
+        String hash = Hashing.sha256().hashString(currentWriteAddress + message.getPublicData() + message.getPrivateData(), StandardCharsets.UTF_8).toString();
+		message.setSignature(RSA.sign(hash, privateKey));
 		
 		List<Transfer> transfers = new ArrayList<>();
 		Transfer t = new Transfer(currentWriteAddress, 0, TrytesConverter.asciiToTrytes(message.toString()), "");
