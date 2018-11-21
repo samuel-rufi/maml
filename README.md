@@ -70,6 +70,14 @@ To split a channel, you simply need to change the password. The rest will be don
 m.split(newPassword);
 ```
 
+To trust only specific users, put their public keys in the keystore:
+
+```js
+m.getTrustedAuthors().add(publicKeyOfBob);
+m.getTrustedAuthors().add(publicKeyOfAlice);
+...
+```
+
 ## How to use MAML in server mode
 
 To use MAML in server mode, Java 8 must be installed.
