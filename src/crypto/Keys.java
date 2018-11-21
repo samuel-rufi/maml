@@ -8,18 +8,18 @@ import java.util.Base64;
 
 public final class Keys {
 
-    public static String publicKeyToString(PublicKey pub) {
+    public static String publicKeyToString(PublicKey publicKey) {
         try {
             KeyFactory fact = KeyFactory.getInstance("RSA");
-            X509EncodedKeySpec spec = fact.getKeySpec(pub, X509EncodedKeySpec.class);
+            X509EncodedKeySpec spec = fact.getKeySpec(publicKey, X509EncodedKeySpec.class);
             return Base64.getEncoder().encodeToString(spec.getEncoded());
         } catch (Exception e) { return null; }
     }
 
-    public static String privateKeyToString(PrivateKey priv) {
+    public static String privateKeyToString(PrivateKey privateKey) {
         try {
             KeyFactory fact = KeyFactory.getInstance("RSA");
-            PKCS8EncodedKeySpec spec = fact.getKeySpec(priv, PKCS8EncodedKeySpec.class);
+            PKCS8EncodedKeySpec spec = fact.getKeySpec(privateKey, PKCS8EncodedKeySpec.class);
             byte[] packed = spec.getEncoded();
             String key64 = Base64.getEncoder().encodeToString(packed);
             Arrays.fill(packed, (byte) 0);
@@ -27,9 +27,9 @@ public final class Keys {
         } catch(Exception e) { return null; }
     }
 
-    public static PrivateKey loadPrivateKey(String privateKeyString)  {
+    public static PrivateKey loadPrivateKey(String s) {
         try {
-            byte[] clear = Base64.getDecoder().decode(privateKeyString);
+            byte[] clear = Base64.getDecoder().decode(s);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(clear);
             KeyFactory fact = KeyFactory.getInstance("RSA");
             PrivateKey priv = fact.generatePrivate(keySpec);
@@ -38,9 +38,9 @@ public final class Keys {
         } catch (Exception e) { return null; }
     }
 
-    public static PublicKey loadPublicKey(String publicKeyString) throws GeneralSecurityException {
+    public static PublicKey loadPublicKey(String s) {
         try {
-            byte[] data =  Base64.getDecoder().decode(publicKeyString);
+            byte[] data =  Base64.getDecoder().decode(s);
             X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
             KeyFactory fact = KeyFactory.getInstance("RSA");
             return fact.generatePublic(spec);

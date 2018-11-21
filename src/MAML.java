@@ -87,7 +87,7 @@ public class MAML {
 			String decryptedData = null;
 			try {
 				decryptedData = AES.decrypt(privateData, channelPassword);
-			} catch (AESException e) { decryptedData = privateData; }
+			} catch (AES.AESException e) { decryptedData = privateData; }
 
 			String signature = o.get("sig").toString();
 			PublicKey publicKey = Keys.loadPublicKey(o.get("pk").toString());
@@ -109,7 +109,7 @@ public class MAML {
 
 	}
 
-	public MessageResponse write(Message message, PrivateKey privateKey) throws RSAException, AESException {
+	public MessageResponse write(Message message, PrivateKey privateKey) throws RSA.RSAException, AES.AESException {
 
 		if(currentWriteAddress == null)
 			findEmptyAddress();

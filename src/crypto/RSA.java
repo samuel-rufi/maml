@@ -71,4 +71,10 @@ public class RSA {
 		}
 	}
 
+	public static class RSAException extends Exception {
+		public RSAException(Throwable e) {
+			super(e);
+		}
+	}
+
 }
