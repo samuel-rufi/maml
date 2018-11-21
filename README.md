@@ -70,7 +70,7 @@ To split a channel, you simply need to change the password. The rest will be don
 m.split(newPassword);
 ```
 
-To trust only specific users, put their public keys in the keystore:
+To trust only specific users, put their public key in the keystore:
 
 ```js
 m.getTrustedAuthors().add(publicKeyOfBob);
