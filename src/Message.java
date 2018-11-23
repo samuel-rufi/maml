@@ -20,20 +20,12 @@ public class Message {
 		this.privateData = privateData;
 	}
 
-	public String getPublicKeyHash() {
-		return publicKeyHash;
-	}
-
 	public void setPublicKeyHash(String publicKeyHash) {
 		this.publicKeyHash = publicKeyHash;
 	}
 
 	public void setPublicKey(PublicKey publicKey) {
 		this.publicKeyHash = Hashing.sha256().hashString(Keys.publicKeyToString(publicKey), StandardCharsets.UTF_8).toString();
-	}
-
-	public String getSignature() {
-		return signature;
 	}
 
 	public void setSignature(String signature) {
