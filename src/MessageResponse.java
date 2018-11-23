@@ -9,13 +9,17 @@ public class MessageResponse {
 
     public MessageResponse(String address, String nextAddress, Message message, boolean isTrusted) {
         this.address = address;
+        this.nextAddress = nextAddress;
         this.message = message;
         this.isTrusted = isTrusted;
-        this.nextAddress = nextAddress;
     }
 
     public String getAddress() {
         return address;
+    }
+
+    public String getNextAddress() {
+        return nextAddress;
     }
 
     public Message getMessage() {
