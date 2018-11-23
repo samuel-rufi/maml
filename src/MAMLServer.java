@@ -21,7 +21,7 @@ public class MAMLServer {
             MAML maml = new MAML(address);
             MessageResponse r = maml.read();
             if(r == null )
-                return "{\"message\": \"null\"}";
+                return "{}";
             return r;
         });
 
@@ -33,7 +33,7 @@ public class MAMLServer {
             MAML maml = new MAML(address, password);
             MessageResponse r = maml.read();
             if(r == null )
-                return "{\"message\": \"null\"}";
+                return "{}";
             return r;
         });
 

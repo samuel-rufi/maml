@@ -102,10 +102,10 @@ public class MAML {
 			ret.setPublicKeyHash(publicKeyHash);
 			ret.setSignature(signature);
 
-			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), ret, isTrusted);
+			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), ret, true, isTrusted);
 
 		} catch (Exception e) {
-			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), null, false);
+			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), null, false, false);
 		}
 
 	}
@@ -136,7 +136,7 @@ public class MAML {
 			}
 		} while (loop);
 
-		return new MessageResponse(currentWriteAddress, hash(currentWriteAddress + channelPassword), message, true);
+		return new MessageResponse(currentWriteAddress, hash(currentWriteAddress + channelPassword), message, true,true);
 
 	}
 
