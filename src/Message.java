@@ -28,7 +28,7 @@ public class Message {
 		this.publicKeyHash = publicKeyHash;
 	}
 
-	public void setPublicKeyHash(PublicKey publicKey) {
+	public void setPublicKey(PublicKey publicKey) {
 		this.publicKeyHash = Hashing.sha256().hashString(Keys.publicKeyToString(publicKey), StandardCharsets.UTF_8).toString();
 	}
 

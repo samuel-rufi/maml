@@ -57,7 +57,7 @@ public class ConsoleApp {
 				String pData = in.nextLine();
 				Message msg = new Message();
 				msg.setPrivateData(pData);
-				msg.setPublicKeyHash(keys.getPublic());
+				msg.setPublicKey(keys.getPublic());
 				MessageResponse r = m.write(msg, keys.getPrivate());
 				if(r != null)
 					System.out.println(r.getAddress() + " -> " + r);
