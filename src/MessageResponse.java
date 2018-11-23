@@ -34,7 +34,9 @@ public class MessageResponse {
         else
             o = new JSONObject(getMessage().toString());
 
+        o = o.accumulate("address", address);
         o = o.accumulate("nextAddress", nextAddress);
+        o = o.accumulate("isTrusted", isTrusted);
 
         return o.toString();
     }

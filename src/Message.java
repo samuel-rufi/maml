@@ -43,7 +43,7 @@ public class Message {
 	@Override
 	public String toString() {
 		JSONObject o = new JSONObject();
-		o.accumulate("d", privateData);
+		o.accumulate("private", privateData);
 		o.accumulate("k", publicKeyHash);
 		o.accumulate("s", signature);
 		return o.toString();
