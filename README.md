@@ -54,7 +54,9 @@ MAML m = new MAML(address, password);
 Publish a message:
 
 ```js    
-Message msg = new Message("My public data", "My private data", publicKey);
+Message msg = new Message();
+msg.setPrivateData("Hello, how are you?");
+msg.setPublicKey(publicKey);
 m.write(msg, privateKey);
 ```
 
@@ -73,8 +75,8 @@ String nextAddress = m.split(newPassword);
 To trust messages only from a specific set of users, put the appropriate public keys in the keystore:
 
 ```js
-m.getTrustedAuthors().add(publicKeyOfBob);
-m.getTrustedAuthors().add(publicKeyOfAlice);
+m.addTrustedAuthor(publicKeyOfBob);
+m.getTrustedAuthors(publicKeyOfAlice);
 ...
 ```
 
