@@ -55,7 +55,7 @@ Publish a message:
 
 ```js    
 Message msg = new Message();
-msg.setPrivateData("Hello, how are you?");
+msg.setPrivateData("This is my message!");
 msg.setPublicKey(publicKey);
 m.write(msg, privateKey);
 ```
