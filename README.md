@@ -76,7 +76,7 @@ To trust messages only from a specific set of users, put the appropriate public 
 
 ```js
 m.addTrustedAuthor(publicKeyOfBob);
-m.getTrustedAuthor(publicKeyOfAlice);
+m.addTrustedAuthor(publicKeyOfAlice);
 ...
 ```
 
