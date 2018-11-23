@@ -1,48 +1,52 @@
+import com.google.common.hash.Hashing;
 import crypto.Keys;
+import org.json.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 import java.util.Base64;
 
 public class Message {
 
-	private String publicData;
 	private String privateData;
-	private PublicKey publicKey;
+	private String publicKeyHash;
 	private String signature;
 
-	public Message(String publicData, String privateData, PublicKey publicKey) {
-		this.publicData = publicData;
-		this.privateData = privateData;
-		this.publicKey = publicKey;
-	}
-
-	public String getPublicData() {
-		return publicData;
-	}
-	
-	public PublicKey getPublicKey() {
-		return publicKey;
+	public String getPrivateData() {
+		return privateData;
 	}
 
 	public void setPrivateData(String privateData) {
 		this.privateData = privateData;
 	}
-	
-	public String getPrivateData() {
-		return privateData;
+
+	public String getPublicKeyHash() {
+		return publicKeyHash;
 	}
-	
-	public void setSignature(String signature) {
-		this.signature = signature;
+
+	public void setPublicKeyHash(String publicKeyHash) {
+		this.publicKeyHash = publicKeyHash;
+	}
+
+	public void setPublicKeyHash(PublicKey publicKey) {
+		this.publicKeyHash = Hashing.sha256().hashString(Keys.publicKeyToString(publicKey), StandardCharsets.UTF_8).toString();
 	}
 
 	public String getSignature() {
 		return signature;
 	}
 
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
 	@Override
 	public String toString() {
-		return "{\"public\": \""+publicData+"\", \"private\": \""+privateData+"\", \"pk\": \""+Keys.publicKeyToString(publicKey)+"\", \"sig\": \""+signature+"\"}";
+		JSONObject o = new JSONObject();
+		o.accumulate("d", privateData);
+		o.accumulate("k", publicKeyHash);
+		o.accumulate("s", signature);
+		return o.toString();
 	}
 
 }

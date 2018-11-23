@@ -28,7 +28,7 @@ public class MAML {
 	private String channelPassword;
 	private String currentWriteAddress;
 	private String currentReadAddress;
-	private Set<PublicKey> trustedAuthors = new HashSet<>();
+	private Map<String, PublicKey> trustedAuthors = new HashMap<>();
 
 	public MAML(String rootAddress) {
 		this.rootAddress = rootAddress;
@@ -81,7 +81,6 @@ public class MAML {
 
 			JSONObject o = new JSONObject(data);
 
-			String publicData = o.get("public").toString();
 			String privateData = o.get("private").toString();
 
 			String decryptedData = null;
@@ -89,21 +88,24 @@ public class MAML {
 				decryptedData = AES.decrypt(privateData, channelPassword);
 			} catch (AES.AESException e) { decryptedData = privateData; }
 
-			String signature = o.get("sig").toString();
-			PublicKey publicKey = Keys.loadPublicKey(o.get("pk").toString());
+			String signature = o.get("s").toString();
+			String publicKeyHash = o.get("k").toString();
 
 			boolean isTrusted = true;
             if(trustedAuthors.size() > 0) {
-                String hash = Hashing.sha256().hashString(currentReadAddress + publicData + privateData, StandardCharsets.UTF_8).toString();
-                isTrusted = trustedAuthors.contains(publicKey) && RSA.verify(hash, signature, publicKey);
+                String hash = Hashing.sha256().hashString(currentReadAddress + privateData, StandardCharsets.UTF_8).toString();
+                isTrusted = trustedAuthors.containsKey(publicKeyHash) && RSA.verify(hash, signature, trustedAuthors.get(publicKeyHash));
             }
 
-			Message ret = new Message(publicData, decryptedData, publicKey);
+			Message ret = new Message();
+            ret.setPrivateData(decryptedData);
+			ret.setPublicKeyHash(publicKeyHash);
 			ret.setSignature(signature);
 
 			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), ret, isTrusted);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), null, false);
 		}
 
@@ -118,7 +120,7 @@ public class MAML {
 
 		message.setPrivateData(AES.encrypt(message.getPrivateData(),channelPassword));
 
-        String hash = Hashing.sha256().hashString(currentWriteAddress + message.getPublicData() + message.getPrivateData(), StandardCharsets.UTF_8).toString();
+        String hash = Hashing.sha256().hashString(currentWriteAddress + message.getPrivateData(), StandardCharsets.UTF_8).toString();
 		message.setSignature(RSA.sign(hash, privateKey));
 		
 		List<Transfer> transfers = new ArrayList<>();
@@ -183,8 +185,12 @@ public class MAML {
 		return hash;
 	}
 
-	public Set<PublicKey> getTrustedAuthors() {
-		return trustedAuthors;
+	public void addTrustedAuthor(PublicKey publicKey) {
+		trustedAuthors.put(Hashing.sha256().hashString(Keys.publicKeyToString(publicKey), StandardCharsets.UTF_8).toString(), publicKey);
+	}
+
+	public void removeTrustedAuthor(PublicKey publicKey) {
+		trustedAuthors.remove(Hashing.sha256().hashString(Keys.publicKeyToString(publicKey), StandardCharsets.UTF_8).toString());
 	}
 
 }

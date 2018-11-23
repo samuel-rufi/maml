@@ -53,11 +53,11 @@ public class ConsoleApp {
 			}
 
 			case "write": {
-				System.out.print("Enter public data: ");
-				String data = in.nextLine();
-				System.out.print("Enter private data: ");
+				System.out.print("Enter data: ");
 				String pData = in.nextLine();
-				Message msg = new Message(data, pData, keys.getPublic());
+				Message msg = new Message();
+				msg.setPrivateData(pData);
+				msg.setPublicKeyHash(keys.getPublic());
 				MessageResponse r = m.write(msg, keys.getPrivate());
 				if(r != null)
 					System.out.println(r.getAddress() + " -> " + r);
