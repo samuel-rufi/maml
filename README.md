@@ -47,7 +47,7 @@ A stream can be initialized as follows:
 ```js
 MAML m = new MAML(address);
 ```
-or using a password:
+if it's password protected:
 ```js
 MAML m = new MAML(address, password);
 ```
