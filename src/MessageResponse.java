@@ -34,7 +34,7 @@ public class MessageResponse {
         JSONObject o = null;
 
         if(message == null)
-            o = new JSONObject("{\"message\": \"invalid content\"}");
+            o = new JSONObject();
         else
             o = new JSONObject(getMessage().toString());
 
@@ -43,6 +43,7 @@ public class MessageResponse {
         o = o.accumulate("isTrusted", isTrusted);
 
         return o.toString();
+
     }
 
 }

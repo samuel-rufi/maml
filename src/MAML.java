@@ -94,7 +94,7 @@ public class MAML {
 			boolean isTrusted = true;
             if(trustedAuthors.size() > 0) {
                 String hash = Hashing.sha256().hashString(currentReadAddress + privateData, StandardCharsets.UTF_8).toString();
-                isTrusted = trustedAuthors.containsKey(publicKeyHash) && RSA.verify(hash, signature, trustedAuthors.get(publicKeyHash));
+				isTrusted = trustedAuthors.containsKey(publicKeyHash) && RSA.verify(hash, signature, trustedAuthors.get(publicKeyHash));
             }
 
 			Message ret = new Message();
@@ -105,7 +105,6 @@ public class MAML {
 			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), ret, isTrusted);
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new MessageResponse(currentReadAddress, hash(currentReadAddress + channelPassword), null, false);
 		}
 
