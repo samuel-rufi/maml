@@ -1,6 +1,6 @@
-package com.antwik.maml;
+package com.rufsam.maml;
 
-import com.antwik.maml.crypto.RSA;
+import com.rufsam.maml.crypto.RSA;
 
 import java.security.KeyPair;
 import java.util.Scanner;

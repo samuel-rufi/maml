@@ -1,7 +1,7 @@
-package com.antwik.maml;
+package com.rufsam.maml;
 
 import com.google.common.hash.Hashing;
-import com.antwik.maml.crypto.Keys;
+import com.rufsam.maml.crypto.Keys;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
