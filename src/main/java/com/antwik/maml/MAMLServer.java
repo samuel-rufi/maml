@@ -1,3 +1,5 @@
+package com.antwik.maml;
+
 import jota.utils.InputValidator;
 
 import static spark.Spark.get;

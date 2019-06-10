@@ -1,4 +1,4 @@
-package crypto;
+package com.antwik.maml.crypto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

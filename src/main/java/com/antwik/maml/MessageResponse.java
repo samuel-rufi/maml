@@ -1,3 +1,5 @@
+package com.antwik.maml;
+
 import org.json.JSONObject;
 
 public class MessageResponse {
